@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keven.campus.mapper.FileMapper">
+
+    <resultMap id="BaseResultMap" type="com.keven.campus.entity.File">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="fileUrl" column="file_url" jdbcType="VARCHAR"/>
+        <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+        <result property="fileCategory" column="file_category" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="file_size" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="fileOtherInfo" column="file_other_info" jdbcType="VARCHAR"/>
+        <result property="businessId" column="business_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,file_url,file_name,
+        file_category,file_size,created_time,
+        file_other_info,business_id,
+        entity_type
+    </sql>
+    <sql id="Insert_List">
+        file_url,file_name,
+        file_category,file_size,
+        created_time,file_other_info,
+        business_id,entity_type
+    </sql>
+    <insert id="insertByForeach">
+        insert into t_campus_file(<include refid="Insert_List"/>) values
+        <foreach item="item" collection="list" open="" separator="," close="">
+            (#{item.fileUrl},#{item.fileName},
+            #{item.fileCategory},#{item.fileSize},
+            now(),#{item.fileOtherInfo},
+            #{item.businessId},#{item.entityType})
+        </foreach>
+    </insert>
+</mapper>

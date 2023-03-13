@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /campus
+  port: 8080
+spring:
+  profiles:
+    active: '@profile.active@' #此处由maven的环境选择决定，参考：https://www.jianshu.com/p/b7c75b0c364c
+  #返回json的全局时间格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+debug: false
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+tencent:
+  cos: # 腾讯云对象存储参数
+    #腾讯云api秘钥id
+    secretId: sds
+    #腾讯云api秘钥key
+    secretKey: xxx
+    bucketName: sd# 桶的名字
+    url: https://campus-images-1313096908.cos.ap-guangzhou.myqcloud.com # 请求域名（使用对应的存储桶和对应的地域）
+    region: ap-guangzhou # 地域
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'

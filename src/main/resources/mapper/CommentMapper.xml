@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keven.campus.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.keven.campus.entity.Comment">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="entityType" column="entity_type" jdbcType="INTEGER"/>
+        <result property="entityId" column="entity_id" jdbcType="BIGINT"/>
+        <result property="commentContent" column="comment_content" jdbcType="VARCHAR"/>
+        <result property="commentStatus" column="comment_status" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="praiseCount" column="praise_count" jdbcType="INTEGER"/>
+        <result property="commentScore" column="comment_score" jdbcType="DOUBLE"/>
+        <result property="fileUrl" column="file_url" jdbcType="VARCHAR"/>
+        <result property="targetId" column="target_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_id,entity_type,
+        entity_id,comment_content,comment_status,
+        created_time,praise_count,comment_score,
+        file_url,target_id
+    </sql>
+</mapper>

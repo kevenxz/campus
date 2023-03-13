@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keven.campus.mapper.DiscussPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.keven.campus.entity.DiscussPost">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="postScore" column="post_score" jdbcType="DOUBLE"/>
+        <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="postStatus" column="post_status" jdbcType="INTEGER"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="postContent" column="post_content" jdbcType="VARCHAR"/>
+        <result property="topicId" column="topic_id" jdbcType="BIGINT"/>
+        <result property="postTitle" column="post_title" jdbcType="VARCHAR"/>
+        <result property="praiseCount" column="praise_count" jdbcType="INTEGER"/>
+        <result property="postPic" column="post_pic" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="openCount" column="open_count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_id,post_score,
+        comment_count,post_status,post_type,
+        post_content,topic_id,post_title,
+        praise_count,post_pic,created_time,
+        updated_time,open_count
+    </sql>
+</mapper>

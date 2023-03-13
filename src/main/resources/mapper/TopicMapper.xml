@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keven.campus.mapper.TopicMapper">
+
+    <resultMap id="BaseResultMap" type="com.keven.campus.entity.Topic">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="topicRemark" column="topic_remark" jdbcType="VARCHAR"/>
+        <result property="topicName" column="topic_name" jdbcType="VARCHAR"/>
+        <result property="discussCount" column="discuss_count" jdbcType="BIGINT"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,topic_remark,topic_name,
+        discuss_count,created_time
+    </sql>
+</mapper>
