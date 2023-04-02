@@ -42,8 +42,9 @@ public class UserController {
     @ApiOperation(value = "获取用户信息")
     public R info(@PathVariable("userId") Long userId) {
 
-        User user = userService.getInfo(userId);
-        return R.ok().put(user);
+//        User user = userService.getInfo(userId);
+//        return R.ok().put(user);
+        return null;
     }
 
     @PostMapping("/delete/{userId}")

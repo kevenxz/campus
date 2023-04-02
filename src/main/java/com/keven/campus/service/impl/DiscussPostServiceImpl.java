@@ -88,7 +88,8 @@ public class DiscussPostServiceImpl extends ServiceImpl<DiscussPostMapper, Discu
         wrapper.orderByDesc(DiscussPost::getCreatedTime);
         // 分页查询
         IPage<DiscussPost> page = this.page(new Query<DiscussPost>().getPage(params), wrapper);
-
+        // 转换
+        PageUtils pageUtils = new PageUtils(page);
         List<DiscussPost> discussPosts = page.getRecords();
         // 查询前三条评论
         List<Map<String, Object>> res = discussPosts.stream().map(discussPost -> {
@@ -101,8 +102,8 @@ public class DiscussPostServiceImpl extends ServiceImpl<DiscussPostMapper, Discu
             map.put("comments", pageComments.get("data"));
             return map;
         }).collect(Collectors.toList());
-
-        return R.ok().put(res);
+        pageUtils.setList(res);
+        return R.ok().put(pageUtils);
     }
 
     /**

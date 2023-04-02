@@ -9,15 +9,16 @@ public enum ResultCode {
     Exception(1, "异常"),
     RuntimeException(2, "网络异常"),
     RuntimeExceptionForGlobal(3, "网络异常，请稍后重试"),
-    LoginTimeout(401, "登录已失效，请重新登录"),
-
+    NeedLogin(401, "需要登录后操作"),
+    NoOperatorAuth(403, "无权限操作"),
     InvalidRequest(-2, "无效请求"), // 无token
 
     MessageCodeError(122, "短信验证码不对"),
     RequestUrlRepeat(333, "请求路径重复有误，请检查"),
     RequestParamsNull(411, "请求参数为空"),
     SelectDataIsNull(412, "查询数据不存在，请核对"),
-
+    LoginError(413, "账号或密码错误，请重新输入！"),
+    LoginForbid(414, "该账号已禁用!"),
 
     // 文件管理
     UploadFileIsNull(131, "上传文件为空"),

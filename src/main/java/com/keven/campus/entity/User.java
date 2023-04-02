@@ -4,21 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.io.Serializable;
 import java.util.Date;
-
-import com.keven.campus.common.validator.group.UpdateGroup;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * 用户表
- *
  * @TableName t_campus_user
  */
 @TableName(value = "t_campus_user")
@@ -27,14 +18,12 @@ public class User implements Serializable {
     /**
      *
      */
-    @TableId
-    @NotNull(message = "用户id不为空", groups = {UpdateGroup.class})
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 昵称
      */
-    @NotBlank(message = "昵称不能为空")
     private String nickname;
 
     /**
@@ -81,6 +70,31 @@ public class User implements Serializable {
      *
      */
     private String openId;
+
+    /**
+     *
+     */
+    private String username;
+
+    /**
+     *
+     */
+    private String password;
+
+    /**
+     *
+     */
+    private String salt;
+
+    /**
+     *
+     */
+    private String email;
+
+    /**
+     * 是否1删除0未删除
+     */
+    private Integer status;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

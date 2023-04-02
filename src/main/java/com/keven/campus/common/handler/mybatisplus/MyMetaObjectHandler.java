@@ -1,6 +1,7 @@
-package com.keven.campus.common.handler;
+package com.keven.campus.common.handler.mybatisplus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.keven.campus.common.utils.SecurityUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,12 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        //第二参数要和实体类中字段名一致，第三个参数字段类型要和实体类中字段类型一致，最后一个参数是待填入的数据
+        //第二 参数要和实体类中字段名一致，第三个参数字段类型要和实体类中字段类型一致，最后一个参数是待填入的数据
         LOGGER.info("start insert fill ....");
+        Long userId = SecurityUtil.getUserId();
         this.strictInsertFill(metaObject, "createdTime", Date.class, new Date());
         this.strictInsertFill(metaObject, "updatedTime", Date.class, new Date());
+        this.setFieldValByName("user_id", userId, metaObject);
     }
 
     /**

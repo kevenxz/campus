@@ -36,6 +36,7 @@ public class QueAnsController {
     @PostMapping("/create")
     @ApiOperation("创建提问")
     public R create(@RequestBody QueAns queAns) {
+        // todo 判断登录
         ValidatorUtils.validateEntity(queAns, AddGroup.class);
         if (StringUtils.isBlank(queAns.getQuestionNickname())) {
             queAns.setQuestionNickname("无名氏");

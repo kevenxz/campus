@@ -1,9 +1,6 @@
 package com.keven.campus.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,6 +25,7 @@ public class Comment implements Serializable {
     /**
      * 评论发起人的id
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long userId;
 
     /**

@@ -34,6 +34,7 @@ public class DiscussPost implements Serializable {
      * 发帖用户id
      */
 //    @NotBlank(message = "发帖用户id不为空",groups = {AddGroup.class})
+    @TableField(fill = FieldFill.INSERT)
     private Long userId;
 
     /**

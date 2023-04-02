@@ -1,9 +1,6 @@
 package com.keven.campus.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 
@@ -26,6 +23,7 @@ public class UserTag implements Serializable {
     /**
      * 用户id
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long userId;
 
     /**

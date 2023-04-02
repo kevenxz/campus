@@ -2,6 +2,7 @@ package com.keven.campus.mapper;
 
 import com.keven.campus.entity.QueAns;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @createDate 2023-01-16 11:15:22
  * @Entity com.keven.campus.entity.QueAns
  */
+@Mapper
 public interface QueAnsMapper extends BaseMapper<QueAns> {
 
 }

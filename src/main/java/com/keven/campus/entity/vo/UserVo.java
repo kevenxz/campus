@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -20,6 +21,32 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserVo {
-    private User user;
+    private Long id;
+
+    /**
+     * 昵称
+     */
+    @NotBlank(message = "昵称不能为空")
+    private String nickname;
+
+    /**
+     * 城市
+     */
+    private Integer city;
+
+    /**
+     * 头像
+     */
+    private String avatarurl;
+
+    /**
+     *
+     */
+    private String province;
+
+    /**
+     *
+     */
+    private Integer gender;
     private List<Tag> tags;
 }

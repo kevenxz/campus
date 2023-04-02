@@ -16,6 +16,11 @@
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
         <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -23,6 +28,8 @@
         ,nickName,city,
         avatarUrl,province,gender,
         phone,type,created_time,
-        modify_time,open_id
+        modify_time,open_id,username,
+        password,salt,email,
+        status
     </sql>
 </mapper>

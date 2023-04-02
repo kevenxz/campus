@@ -1,6 +1,8 @@
-package com.keven.campus.common.exception;
+package com.keven.campus.common.handler.execption;
 
+import com.keven.campus.common.exception.RRException;
 import com.keven.campus.common.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -22,10 +24,10 @@ public class RRExceptionHandler {
      */
     @ExceptionHandler(RRException.class)
     public R handleRrException(RRException e) {
-        R r = new R();
-        r.put("code", e.getCode());
-        r.put("msg", e.getMessage());
-        return r;
+        //打印异常日志
+        logger.error("出现异常!{}", e);
+        // 从异常对象中获取提示信息封装返回
+        return R.error(e.getCode(), e.getMsg());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
