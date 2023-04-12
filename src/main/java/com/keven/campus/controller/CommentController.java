@@ -2,6 +2,7 @@ package com.keven.campus.controller;
 
 import com.keven.campus.common.utils.CampusConstant;
 import com.keven.campus.common.utils.R;
+import com.keven.campus.common.utils.SecurityUtil;
 import com.keven.campus.common.utils.enums.Msg;
 import com.keven.campus.common.validator.ValidatorUtils;
 import com.keven.campus.entity.Comment;
@@ -37,10 +38,11 @@ public class CommentController implements CampusConstant {
     @ApiOperation(value = "添加评论")
     public R create(@PathVariable("discussPostId") Long discussPostId, @RequestBody Comment comment) {
         ValidatorUtils.validateEntity(comment);
-        // todo 做一个统一权限认证 token
-//        comment.setUserId(); // 设置当前登录的用户 通过 token 获取用户的id
+        Long userId = SecurityUtil.getUserId();
+        // 设置当前登录的用户 通过 token 获取用户的id
+        comment.setUserId(userId);
+        commentService.save(comment);
         // todo 触发评论事件
-
 
         if (comment.getEntityType() == ENTITY_TYPE_POST) {
             // todo 当前是针对帖子就出发帖子事件

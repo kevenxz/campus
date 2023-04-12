@@ -36,16 +36,13 @@ public class QueAnsController {
     @PostMapping("/create")
     @ApiOperation("创建提问")
     public R create(@RequestBody QueAns queAns) {
-        // todo 判断登录
         ValidatorUtils.validateEntity(queAns, AddGroup.class);
         if (StringUtils.isBlank(queAns.getQuestionNickname())) {
             queAns.setQuestionNickname("无名氏");
         }
         queAns.setQuestionTime(new Date());
         queAns.setIsDeleted(0);
-        queAnsService.save(queAns);
-        //TODO 需要做消息的推送
-        return R.ok();
+        return queAnsService.create(queAns);
     }
 
     /**

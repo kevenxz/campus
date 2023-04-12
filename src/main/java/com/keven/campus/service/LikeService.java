@@ -10,5 +10,5 @@ import com.keven.campus.common.utils.R;
  */
 public interface LikeService {
 
-    R like(Integer entityType, Long entityId, Long entityUserId, Long postId);
+    R like(Integer entityType, Long entityId, Long entityUserId);
 }

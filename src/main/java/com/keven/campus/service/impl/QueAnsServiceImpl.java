@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.keven.campus.common.utils.PageUtils;
 import com.keven.campus.common.utils.Query;
+import com.keven.campus.common.utils.R;
+import com.keven.campus.common.utils.SecurityUtil;
+import com.keven.campus.common.utils.enums.ResultCode;
 import com.keven.campus.entity.QueAns;
 import com.keven.campus.service.QueAnsService;
 import com.keven.campus.mapper.QueAnsMapper;
@@ -36,6 +39,19 @@ public class QueAnsServiceImpl extends ServiceImpl<QueAnsMapper, QueAns>
         );
         return new PageUtils(page);
 
+    }
+
+    @Override
+    public R create(QueAns queAns) {
+        // 获取当前登录的用户
+        Long userId = SecurityUtil.getUserId();
+        if (userId.equals(queAns.getAnswerId())) {
+            return R.error("不能匿名提问自己");
+        }
+        queAns.setQuestionId(userId);
+        save(queAns);
+        //TODO 需要做消息的推送
+        return R.ok();
     }
 }
 

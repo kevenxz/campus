@@ -6,7 +6,8 @@ package com.keven.campus.common.utils.redis;
  */
 public class RedisConstants {
     private static final String SPLIT = ":";
-
+    private static final String PREFIX_FOLLOWEE = "followee";// 获取关注列表的键
+    private static final String PREFIX_FANS = "fans";// 获取粉丝的键
     private static final String PREFIX_USER_LIKE = "like:user";
     /**
      * 缓存空数据时间ttl
@@ -29,5 +30,17 @@ public class RedisConstants {
     // like:user:userId -> int
     public static String getUserLikeKey(Long userId) {
         return PREFIX_USER_LIKE + SPLIT + userId;
+    }
+
+    // 某个 用户 的 粉丝      zset(实体id ， 当前时间)
+    // followee:entityId:entityType -> zset(userId,now)
+    public static String getFansKey(Long entityId, Integer entityType) {
+        return PREFIX_FANS + SPLIT + entityId + SPLIT + entityType;
+    }
+
+    /* 某个实体关注的实体
+     followee:entityType:userId -> zset(entityId,now)*/
+    public static String getFolloweeKey(Integer entityType, Long userId) {
+        return PREFIX_FOLLOWEE + SPLIT + entityType + SPLIT + userId;
     }
 }

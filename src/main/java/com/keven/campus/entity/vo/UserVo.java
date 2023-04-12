@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,10 +30,6 @@ public class UserVo {
     @NotBlank(message = "昵称不能为空")
     private String nickname;
 
-    /**
-     * 城市
-     */
-    private Integer city;
 
     /**
      * 头像
@@ -42,11 +39,6 @@ public class UserVo {
     /**
      *
      */
-    private String province;
-
-    /**
-     *
-     */
     private Integer gender;
-    private List<Tag> tags;
+
 }

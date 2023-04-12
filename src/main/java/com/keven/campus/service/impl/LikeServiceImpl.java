@@ -3,11 +3,14 @@ package com.keven.campus.service.impl;
 import cn.hutool.core.util.BooleanUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.keven.campus.common.utils.CampusConstant;
 import com.keven.campus.common.utils.R;
 import com.keven.campus.common.utils.SecurityUtil;
 import com.keven.campus.common.utils.redis.RedisConstants;
+import com.keven.campus.entity.Comment;
 import com.keven.campus.entity.DiscussPost;
 import com.keven.campus.entity.LoginUser;
+import com.keven.campus.mapper.CommentMapper;
 import com.keven.campus.mapper.DiscussPostMapper;
 import com.keven.campus.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +21,14 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Keven
  * @version 1.0
  */
 @Service
-public class LikeServiceImpl implements LikeService {
+public class LikeServiceImpl implements LikeService, CampusConstant {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -32,28 +36,36 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private DiscussPostMapper discussPostMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
     /**
      * 点赞
      *
      * @param entityType   实体类型 （1、帖子 2、评论 ）
      * @param entityId     实体id
      * @param entityUserId 实体的作者
-     * @param postId       post id
      * @return {@link R}
      */
     @Override
-    public R like(Integer entityType, Long entityId, Long entityUserId, Long postId) {
+    public R like(Integer entityType, Long entityId, Long entityUserId) {
         // 1、获取当前登录用户
         Long userId = SecurityUtil.getLoginUser().getUser().getId();
         // 2、判断当前用户有没有点赞
         String entityLikeKey = RedisConstants.getEntityLikeKey(entityType, entityId);
-        String userLikeKey = RedisConstants.getUserLikeKey(userId);
+        String userLikeKey = RedisConstants.getUserLikeKey(entityUserId);
         Boolean member = stringRedisTemplate.opsForSet().isMember(entityLikeKey, userId.toString());
+        int update = 0;
         if (BooleanUtil.isFalse(member)) {
             // 3、 如果未点赞，可以点赞
             // 3.1、数据库点赞数加一
-            int update = discussPostMapper.update(null, new LambdaUpdateWrapper<DiscussPost>().
-                    setSql("praise_count = praise_count + 1").eq(DiscussPost::getId, postId));
+            if (entityType == ENTITY_TYPE_POST) {
+                update = discussPostMapper.update(null, new LambdaUpdateWrapper<DiscussPost>().
+                        setSql("praise_count = praise_count + 1").eq(DiscussPost::getId, entityId));
+            } else if (entityType == ENTITY_TYPE_COMMENT) {
+                update = commentMapper.update(null, new LambdaUpdateWrapper<Comment>()
+                        .setSql("praise_count = praise_count + 1").eq(Comment::getId, entityId));
+            }
             // 3.2、保存用户到redis的set集合
             if (update > 0) {
                 // 开启事务做两个操作
@@ -72,8 +84,13 @@ public class LikeServiceImpl implements LikeService {
         } else {
             // 4、已点赞
             // 4.1、数据库点赞数-1
-            int update = discussPostMapper.update(null, new LambdaUpdateWrapper<DiscussPost>().
-                    setSql("praise_count = praise_count - 1").eq(DiscussPost::getId, postId));
+            if (entityType == ENTITY_TYPE_POST) {
+                update = discussPostMapper.update(null, new LambdaUpdateWrapper<DiscussPost>().
+                        setSql("praise_count = praise_count - 1").eq(DiscussPost::getId, entityId));
+            } else if (entityType == ENTITY_TYPE_COMMENT) {
+                update = commentMapper.update(null, new LambdaUpdateWrapper<Comment>()
+                        .setSql("praise_count = praise_count - 1").eq(Comment::getId, entityId));
+            }
             // 4.2、把用户从redis的set集合移除
             if (update > 0) {
                 stringRedisTemplate.execute(new SessionCallback<Object>() {
@@ -89,7 +106,7 @@ public class LikeServiceImpl implements LikeService {
                 });
             }
         }
-        // todo 触发点赞事件
+        // TODO 触发点赞事件
 
         return R.ok();
     }

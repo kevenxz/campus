@@ -57,7 +57,8 @@ public class DiscussPostController {
         Map<String, Object> params = new HashMap<>();
         params.put(Constant.PAGE, curPage);
         params.put(Constant.LIMIT, limit);
-        params.put("type", 0); // 放置当前的权限，通过权限判断是否查询已拉黑的帖子 0-普通用户 1-管理员 2-版主
+        // 放置当前的权限，通过权限判断是否查询已拉黑的帖子 0-普通用户 1-管理员 2-版主
+        params.put("type", 0);
         return discussPostService.queryPage(topicId, params);
     }
 

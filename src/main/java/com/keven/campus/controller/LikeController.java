@@ -28,15 +28,13 @@ public class LikeController {
      * @param entityType   实体类型（1、帖子 2、评论 ）
      * @param entityId     实体id
      * @param entityUserId 实体作者
-     * @param postId       post id
      * @return {@link R}
      */
     @ApiOperation("点赞")
     @PostMapping("/{entityType}")
     public R like(@PathVariable("entityType") Integer entityType,
                   Long entityId,
-                  Long entityUserId,
-                  Long postId) {
-        return likeService.like(entityType, entityId, entityUserId, postId);
+                  Long entityUserId) {
+        return likeService.like(entityType, entityId, entityUserId);
     }
 }

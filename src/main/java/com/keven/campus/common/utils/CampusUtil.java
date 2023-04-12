@@ -12,12 +12,12 @@ import java.util.UUID;
  * @version 1.0
  */
 public class CampusUtil {
+
     // 生成随机字符串 上传文件 上传图片
     public static String generateUUID() {
         // 只要字母和数字  把所有的横线替换为空的字符
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
-
     // 返回存放分页参数的map,方便生成Page参数
     public static Map<String, Object> getPageMap(Integer curPage, Integer limit) {
         Map<String, Object> pageMap = new HashMap<>();

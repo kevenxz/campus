@@ -19,6 +19,10 @@ public class SecurityUtil {
      * @return
      */
     public static LoginUser getLoginUser() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
         return (LoginUser) getAuthentication().getPrincipal();
     }
 
@@ -37,6 +41,10 @@ public class SecurityUtil {
     }
 
     public static Long getUserId() {
-        return getLoginUser().getUser().getId();
+        LoginUser loginUser = getLoginUser();
+        if (loginUser == null) {
+            return null;
+        }
+        return loginUser.getUser().getId();
     }
 }
