@@ -26,10 +26,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File>
             return R.error(ResultCode.RequestParamsNull);
         }
         // 设置文件的实体类型 和 实体id
-        files = files.stream().map(file -> {
+        files = files.stream().peek(file -> {
             file.setEntityType(entityType);
             file.setBusinessId(entityId);
-            return file;
         }).collect(Collectors.toList());
         return saveBatch(files) ? R.ok() : R.error();
     }
