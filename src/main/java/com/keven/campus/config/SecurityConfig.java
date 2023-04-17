@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(accessDeniedHandler);
         // 允许匿名访问
-//        http.antMatcher("/user/login").antMatcher("/miniwx/login").anonymous();
+        http.antMatcher("/user/login").antMatcher("/miniwx/login").anonymous();
 //        http.authorizeRequests().antMatchers("/comment/list/**");
 //        http.antMatcher("/follow/{isFollow}").authorizeRequests();
 //        http.antMatcher("/user/logout").authorizeRequests();

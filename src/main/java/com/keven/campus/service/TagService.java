@@ -29,4 +29,12 @@ public interface TagService extends IService<Tag> {
      * @return
      */
     Map<String, Object> queryPage(Map<String, Object> params);
+
+    /**
+     * 获取用户的标签
+     *
+     * @param userId
+     * @return
+     */
+    List<Tag> getUserTags(Long userId);
 }

@@ -9,6 +9,7 @@ import com.keven.campus.common.exception.RRException;
 import com.keven.campus.common.utils.Query;
 import com.keven.campus.entity.Group;
 import com.keven.campus.entity.Tag;
+import com.keven.campus.entity.UserTag;
 import com.keven.campus.service.GroupService;
 import com.keven.campus.service.TagService;
 import com.keven.campus.mapper.TagMapper;
@@ -82,6 +83,23 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
 
         return map;
     }
+
+    @Override
+    public List<Tag> getUserTags(Long userId) {
+        // 获取tag的id
+        List<UserTag> list =
+                userTagService.list(new LambdaQueryWrapper<UserTag>()
+                        .select(UserTag::getTagId).eq(UserTag::getUserId, userId));
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        List<Long> ids = list.stream().map(UserTag::getTagId).collect(Collectors.toList());
+        // 获取实体tag
+
+        return listByIds(ids);
+    }
+
+
 }
 
 

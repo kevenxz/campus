@@ -14,6 +14,12 @@ public interface CampusConstant {
      */
     int HAS_PIC = 1;
 
+    /**
+     * 帖子状态 0-正常; 1-精华; 2-拉黑
+     */
+    int POST_STATUS_NORMAL = 0;
+    int POST_STATUS_PRIME = 1;
+    int POST_STATUS_BLOCK = 2;
 
     /**
      * 删除状态
