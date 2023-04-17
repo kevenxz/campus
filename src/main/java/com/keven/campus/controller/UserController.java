@@ -39,9 +39,15 @@ public class UserController {
     }
 
     @GetMapping("/info/{userId}")
-    @ApiOperation(value = "获取用户信息")
+    @ApiOperation(value = "获取用户个人页信息")
     public R info(@PathVariable("userId") Long userId) {
         return userService.getUserInfo(userId);
+    }
+
+    @GetMapping("/userInfo")
+    @ApiOperation(value = "获取用户基本信息")
+    public R userInfo() {
+        return userService.getBaseInfo();
     }
 
     @PostMapping("/delete/{userId}")

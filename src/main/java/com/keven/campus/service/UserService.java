@@ -10,5 +10,19 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+
+    /**
+     * 获取用户个人页信息信息
+     *
+     * @param userId 用户id
+     * @return {@link R}
+     */
     R getUserInfo(Long userId);
+
+    /**
+     * 获取登录用户的基本信息
+     *
+     * @return {@link R}
+     */
+    R getBaseInfo();
 }

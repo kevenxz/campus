@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.keven.campus.common.utils.CampusConstant;
 import com.keven.campus.common.utils.R;
+import com.keven.campus.common.utils.SecurityUtil;
 import com.keven.campus.common.utils.redis.RedisConstants;
 import com.keven.campus.entity.DiscussPost;
+import com.keven.campus.entity.LoginUser;
 import com.keven.campus.entity.User;
+import com.keven.campus.entity.vo.BaseUserVo;
 import com.keven.campus.entity.vo.UserInfo;
 import com.keven.campus.mapper.DiscussPostMapper;
 import com.keven.campus.service.FollowService;
@@ -64,6 +67,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtils.copyProperties(user, userInfo);
         return R.ok().put(userInfo);
     }
+
+    @Override
+    public R getBaseInfo() {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        if (loginUser == null) {
+            return R.error();
+        }
+        BaseUserVo baseUserVo = new BaseUserVo();
+        BeanUtils.copyProperties(loginUser.getUser(), baseUserVo);
+        return R.ok().put(baseUserVo);
+    }
+
 }
 
 
