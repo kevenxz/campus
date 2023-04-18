@@ -20,7 +20,12 @@ public interface CampusConstant {
     int POST_STATUS_NORMAL = 0;
     int POST_STATUS_PRIME = 1;
     int POST_STATUS_BLOCK = 2;
-
+    /**
+     * 消息状态(0 未读 1 已读 2 删除)
+     */
+    int MESSAGE_STATUS_UNREAD = 0;
+    int MESSAGE_STATUS_READ = 1;
+    int MESSAGE_STATUS_DELETE = 2;
     /**
      * 删除状态
      */

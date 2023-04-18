@@ -1,5 +1,6 @@
 package com.keven.campus.service;
 
+import com.keven.campus.common.utils.R;
 import com.keven.campus.entity.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,23 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MessageService extends IService<Message> {
 
+    /**
+     * 获取登录用户的私信列表
+     * 会话列表--> 会话的总数量、每个会话未读的信息、每个会话的最新信息、每个会话的总信息数
+     *
+     * @param curPage
+     * @param limit
+     * @return
+     */
+    R getConversations(Integer curPage, Integer limit);
+
+    /**
+     * 获取单个会话的所有信息
+     *
+     * @param curPage
+     * @param limit
+     * @param conversationId
+     * @return
+     */
+    R getConversationOfMsgs(Integer curPage, Integer limit, String conversationId);
 }
