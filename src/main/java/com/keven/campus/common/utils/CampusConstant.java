@@ -89,7 +89,7 @@ public interface CampusConstant {
     /**
      * 系统用户的id
      */
-    int SYSTEM_USER_ID = 1;
+    long SYSTEM_USER_ID = 1;
     /**
      * 权限：普通用户
      */

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotBlank;
  */
 @TableName(value = "t_campus_message")
 @Data
+@Builder
 public class Message implements Serializable {
     /**
      *

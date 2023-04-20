@@ -6,13 +6,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.keven.campus.common.exception.RRException;
 import com.keven.campus.common.utils.*;
 import com.keven.campus.entity.Message;
+import com.keven.campus.entity.User;
 import com.keven.campus.entity.vo.ConversationVo;
+import com.keven.campus.mapper.UserMapper;
 import com.keven.campus.service.MessageService;
 import com.keven.campus.mapper.MessageMapper;
-import com.sun.xml.internal.ws.api.model.MEP;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,15 +31,21 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         implements MessageService, CampusConstant {
 
 
+    @Resource
+    private UserMapper userMapper;
+
     @Override
     public R getConversations(Integer curPage, Integer limit) {
-        Long userId = SecurityUtil.getUserId();
+        Long userId = 1L;
+        if (userId == null) {
+            return R.ok().put(new PageUtils());
+        }
         // 分页查询会话
         IPage<Message> page = page(new Query<Message>().getPage(CampusUtil.getPageMap(curPage, limit)),
                 new QueryWrapper<Message>()
                         .select("max(id) as id ")
                         .ne("msg_status", MESSAGE_STATUS_DELETE)
-                        .ne("from_id", SYSTEM_USER_ID)
+//                        .ne("from_id", SYSTEM_USER_ID)
                         .eq("from_id", userId).or().eq("to_id", userId)
                         .groupBy("conversation_id").orderByDesc("id"));
         // 没有会话直接返回
@@ -55,7 +62,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
             conversationVo.setUnReadCount(getUnreadCount(userId, message.getConversationId()));
             return conversationVo;
         }).collect(Collectors.toList());
-
 
         PageUtils pageUtils = new PageUtils(conversationVos, (int) page.getTotal(), (int) page.getSize(), (int) page.getCurrent());
         pageUtils.setList(conversationVos);
@@ -84,6 +90,28 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         return Integer.parseInt(String.valueOf(count));
     }
 
+    @Override
+    public R sendLetter(Long toId, String msgContent, Long fileId) {
+        // 获取当前登录用户
+        Long userId = SecurityUtil.getUserId();
+        if (userId == null) {
+            throw new RRException("没有该用户!");
+        }
+        // 查询目标用户
+        User target = userMapper.selectOne(new LambdaQueryWrapper<User>()
+                .eq(User::getId, toId)
+                .eq(User::getStatus, CampusConstant.STAUS_EXIST));
+        Message message = Message.builder().fromId(userId)
+                .toId(target.getId()).fileId(fileId)
+                .msgContent(msgContent).msgStatus(MESSAGE_STATUS_UNREAD).build();
+        if (message.getFromId() > message.getToId()) {
+            message.setConversationId(message.getToId() + "-" + message.getFromId());
+        } else {
+            message.setConversationId(message.getFromId() + "-" + message.getToId());
+        }
+        save(message);
+        return R.ok();
+    }
 }
 
 

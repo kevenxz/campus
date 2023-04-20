@@ -13,7 +13,7 @@ public interface MessageService extends IService<Message> {
 
     /**
      * 获取登录用户的私信列表
-     * 会话列表--> 会话的总数量、每个会话未读的信息、每个会话的最新信息、每个会话的总信息数
+     * 会话列表--> 会话的总数量、每个会话未读的信息数量、每个会话的最新信息、每个会话的总信息数
      *
      * @param curPage
      * @param limit
@@ -30,4 +30,12 @@ public interface MessageService extends IService<Message> {
      * @return
      */
     R getConversationOfMsgs(Integer curPage, Integer limit, String conversationId);
+
+    /**
+     * 发送消息
+     * @param toId 目标id
+     * @param msgContent 消息内容
+     * @return
+     */
+    R sendLetter(Long toId, String msgContent,Long fileId);
 }
