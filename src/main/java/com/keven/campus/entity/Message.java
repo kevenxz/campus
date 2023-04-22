@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -19,6 +21,8 @@ import javax.validation.constraints.NotBlank;
 @TableName(value = "t_campus_message")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message implements Serializable {
     /**
      *

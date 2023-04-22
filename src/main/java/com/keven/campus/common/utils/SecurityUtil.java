@@ -2,6 +2,7 @@ package com.keven.campus.common.utils;
 
 import com.keven.campus.entity.LoginUser;
 import com.keven.campus.entity.User;
+import com.keven.campus.entity.vo.UserVo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -46,5 +47,13 @@ public class SecurityUtil {
             return null;
         }
         return loginUser.getUser().getId();
+    }
+
+    public static User getUser() {
+        LoginUser loginUser = getLoginUser();
+        if (loginUser == null) {
+            return null;
+        }
+        return loginUser.getUser();
     }
 }
